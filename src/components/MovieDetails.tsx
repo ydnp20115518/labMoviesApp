@@ -55,6 +55,16 @@ const MovieDetails= (movie: MovieDetailsProps) => {
                 />
                 <Chip label={`Released: ${movie.release_date}`} />
             </Paper>
+            <Paper component="ul" sx={styles.chipSet}>
+                <li>
+                    <Chip label="Production Countries" sx={styles.chipLabel} color="primary" />
+                </li>
+                {(movie.production_countries ?? []).map((p) => (
+                    <li key={`${p.iso_3166_1}-${p.name}`}>
+                        <Chip label={p.name ?? "Unknown"} />
+                    </li>
+                ))}
+            </Paper>
         </>
     );
 };
