@@ -16,3 +16,19 @@ export type BaseMovieListProps  ={
 // Type for the API response when fetching detailed movie information
 export type MovieDetailsProps = paths["/3/movie/{movie_id}"]["get"]["responses"][200]["content"]["application/json"];
 
+export type MovieImage = {
+  file_path: string;
+  aspect_ratio?: number; //some props are optional...
+  height?: number;
+  iso_639_1?: string;
+  vote_average?: number;
+  vote_count?: number;
+  width?: number;
+}
+
+export type MoviePageProps = {
+  movie: MovieDetailsProps;
+  images: MovieImage[];
+}
+
+
