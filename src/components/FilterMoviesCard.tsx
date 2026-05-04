@@ -10,6 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FilterOption } from "../types/movieAppTypes";
+import { getGenres } from "../api/tmdb-api";
 
 const styles = {
   root: {
@@ -34,18 +35,11 @@ const FilterMoviesCard= ({ titleFilter, genreFilter, onUserInput }: FilterMovies
   const [genres, setGenres] = useState([{ id: '0', name: "All" }])
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_KEY}`
-    )
-      .then(res => res.json())
-      .then(json => {
-        return json.genres
-      })
-      .then(apiGenres => {
-        setGenres([genres[0], ...apiGenres]);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    getGenres().then((allGenres) => {
+      setGenres([genres[0], ...allGenres]);
+    });
+  }, [])
+
 
   const handleChange = (e: SelectChangeEvent, type: FilterOption, value: string) => {
         e.preventDefault()
