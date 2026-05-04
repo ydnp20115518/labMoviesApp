@@ -4,11 +4,14 @@ import HomePage from "./pages/HomePage";
 import MoviePage from "./pages/MovieDetailsPage";
 import FavouriteMoviesPage from "./pages/FavouriteMoviesPage";
 import MovieReviewPage from "./pages/MovieReviewPage";
+import SiteHeader from './components/SiteHeader'
 
 
 const App = () => {
   return (
      <BrowserRouter>
+     <SiteHeader />      {/* New Header  */}
+          <Routes></Routes>
       <ul>
         <li>
           <Link to="/">Home</Link>
