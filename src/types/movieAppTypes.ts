@@ -31,4 +31,7 @@ export type MoviePageProps = {
   images: MovieImage[];
 }
 
+export type FilterOption = "title" | "genre";
+
+
 
