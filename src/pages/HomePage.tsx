@@ -6,12 +6,12 @@ import MovieList from "../components/MovieList";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import { DiscoverMovieOverviewProps, FilterOption } from "../types/movieAppTypes";
- 
+
 const styles = {
   root: {
     padding: "20px",
   },
-   fab: {
+  fab: {
     marginTop: 8,
     position: "fixed",
     top: 2,
@@ -27,7 +27,7 @@ const MovieListPage = () => {
 
   const genreId = Number(genreFilter);
 
-const displayedMovies = movies
+  const displayedMovies = movies
     .filter((m: DiscoverMovieOverviewProps) => {
       return (m.title ?? "").toLowerCase().search(titleFilter.toLowerCase()) !== -1;
     })
@@ -36,9 +36,16 @@ const displayedMovies = movies
     });
 
   const handleChange = (type: FilterOption, value: string) => {
-      if (type === "title") setTitleFilter(value);
-      else setGenreFilter(value);
-    };
+    if (type === "title") setTitleFilter(value);
+    else setGenreFilter(value);
+  };
+
+  const addToFavourites = (movieId: number) => {
+    const updatedMovies = movies.map((m: DiscoverMovieOverviewProps) =>
+      m.id === movieId ? { ...m, favourite: true } : m
+    );
+    setMovies(updatedMovies);
+  };
 
   useEffect(() => {
     fetch(
@@ -53,24 +60,25 @@ const displayedMovies = movies
         setMovies(movies);
       });
   }, []);
-  
-return (
+
+  return (
     <>
       <Grid container sx={styles.root}>
         <Grid item xs={12}>
           <Header title={"Home Page"} />
         </Grid>
         <Grid item container spacing={5}>
-          <MovieList movies={displayedMovies}></MovieList>
+          <MovieList movies={displayedMovies} selectFavourite={addToFavourites} />
+
         </Grid>
       </Grid>
       <Fab
-          color="secondary"
-          variant="extended"
-          onClick={() => setDrawerOpen(true)}
-          sx={styles.fab}
-        >
-          Filter
+        color="secondary"
+        variant="extended"
+        onClick={() => setDrawerOpen(true)}
+        sx={styles.fab}
+      >
+        Filter
       </Fab>
       <Drawer
         anchor="left"
