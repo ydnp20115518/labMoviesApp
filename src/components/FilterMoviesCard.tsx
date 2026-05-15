@@ -11,8 +11,6 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { ChangeEvent, useEffect, useState } from "react";
 import { FilterOption } from "../types/movieAppTypes";
 import { getGenres } from "../api/tmdb-api";
-import Spinner from "./Spinner";
-import { useQuery } from "react-query";
 
 const styles = {
   root: {
@@ -33,25 +31,20 @@ interface FilterMoviesCardProps {
   onUserInput: (f: FilterOption, s: string)  => void;
 }
 
-const FilterMoviesCard= ({ titleFilter, genreFilter, onUserInput }: FilterMoviesCardProps) => { 
-  const { data, error, isLoading, isError } = useQuery<any, Error>("genres", getGenres);
+const FilterMoviesCard= ({ titleFilter, genreFilter, onUserInput }: FilterMoviesCardProps) => {
+  const [genres, setGenres] = useState([{ id: '0', name: "All" }])
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-  if (isError) {
-    return <h1>{(error as Error).message}</h1>;
-  }
-const genres = data?.genres || [];
-  if (genres[0].name !== "All") {
-    genres.unshift({ id: 0, name: "All" });
-  }
+  useEffect(() => {
+    getGenres().then((allGenres) => {
+      setGenres([genres[0], ...allGenres]);
+    });
+  }, [])
+
 
   const handleChange = (e: SelectChangeEvent, type: FilterOption, value: string) => {
-    e.preventDefault()
-      onUserInput(type, value)
-  };
-
+        e.preventDefault()
+        onUserInput(type, value)
+      };
   const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleChange(e, "title", e.target.value)
   }
@@ -85,7 +78,7 @@ const genres = data?.genres || [];
               value={genreFilter}
               onChange={handleGenreChange}
             >
-              {genres.map((genre: any) => {
+              {genres.map((genre) => {
                 return (
                   <MenuItem key={genre.id} value={genre.id}>
                     {genre.name}
