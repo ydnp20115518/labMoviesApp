@@ -66,7 +66,7 @@ TBD
 
 ---
 
-### [ ] 2.0 Create MoviesContext for Shared Favourites State
+### [x] 2.0 Create MoviesContext for Shared Favourites State
 
 **Goal**: Replace localStorage-based favourites with a React Context that manages shared favourites state across the app and persists to localStorage.
 
