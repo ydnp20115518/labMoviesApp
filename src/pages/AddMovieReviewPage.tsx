@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useReviewsContext } from '../contexts/ReviewsContext';
 
 interface ReviewFormData {
   author: string;
@@ -21,6 +22,7 @@ interface ReviewFormData {
 const AddMovieReviewPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { addReview } = useReviewsContext();
   const { control, handleSubmit, formState: { errors } } = useForm<ReviewFormData>({
     defaultValues: {
       author: '',
@@ -33,12 +35,11 @@ const AddMovieReviewPage = () => {
 
   /**
    * Handle form submission
-   * In Task 9.0, this will be integrated with review storage
-   * For now, navigate back to home
+   * Save review to ReviewsContext (app state, not localStorage)
    */
   const onSubmit = (data: ReviewFormData) => {
-    // TODO: Task 9.0 - Store review in app state
-    console.log('Review submitted:', { movieId, ...data });
+    // Save review to app state
+    addReview(movieId, data.author, data.title, data.comment);
     
     // Navigate back to home after submission
     navigate('/');

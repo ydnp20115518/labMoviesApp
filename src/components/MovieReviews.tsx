@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -6,10 +6,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Chip from "@mui/material/Chip";
 import { Link } from "react-router-dom";
 import { MovieDetailsProps } from "../types/movieAppTypes";
 import { excerpt } from "../util";
-import { getMovieReviews } from "../api/tmdb-api";
+import useReviewsByMovieId from "../hooks/useReviewsByMovieId";
 
 const styles = {
     table: {
@@ -18,14 +19,7 @@ const styles = {
 };
 
 const MovieReviews: React.FC<MovieDetailsProps> = (movie) => { 
-    const [reviews, setReviews] = useState([]);
-
-    useEffect(() => {
-        getMovieReviews(movie.id).then((reviews) => {
-            setReviews(reviews);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const reviews = useReviewsByMovieId(movie.id);
 
     return (
         <TableContainer component={Paper}>
@@ -41,19 +35,28 @@ const MovieReviews: React.FC<MovieDetailsProps> = (movie) => {
                     {reviews.map((r: any) => (
                         <TableRow key={r.id}>
                             <TableCell component="th" scope="row">
-                                {r.author}
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    {r.author}
+                                    {r.isUserSubmitted && (
+                                        <Chip label="User Review" size="small" variant="outlined" />
+                                    )}
+                                </div>
                             </TableCell>
                             <TableCell >{excerpt(r.content)}</TableCell>
                             <TableCell >
-                                <Link
-                                    to={`/reviews/${r.id}`}
-                                    state={{
-                                        review: r,
-                                        movie: movie,
-                                    }}
-                                >
-                                    Full Review
-                                </Link>
+                                {r.isUserSubmitted ? (
+                                    <span style={{ color: '#999' }}>User Review</span>
+                                ) : (
+                                    <Link
+                                        to={`/reviews/${r.id}`}
+                                        state={{
+                                            review: r,
+                                            movie: movie,
+                                        }}
+                                    >
+                                        Full Review
+                                    </Link>
+                                )}
                             </TableCell>
                         </TableRow>
                     ))}

@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Navigate, Routes , Link} from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { MoviesProvider } from './contexts/MoviesContext';
+import { ReviewsProvider } from './contexts/ReviewsContext';
 import HomePage from "./pages/HomePage";
 import MoviePage from "./pages/MovieDetailsPage";
 import FavouriteMoviesPage from "./pages/FavouriteMoviesPage";
@@ -49,7 +50,9 @@ const App = () => {
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <MoviesProvider>
-        <App />
+        <ReviewsProvider>
+          <App />
+        </ReviewsProvider>
       </MoviesProvider>
     </QueryClientProvider>
   )
