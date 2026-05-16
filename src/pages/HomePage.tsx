@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
 import PageTemplate from '../components/TemplateMovieListPage';
-import { MovieDetailsProps } from "../types/movieAppTypes";
-import { getMovies } from "../api/tmdb-api";
+import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, {
   titleFilter,
   genreFilter,
 } from "../components/MovieFilterUI";
+import useMoviesQuery from "../hooks/useMoviesQuery";
+import AddToFavourites from "../components/CardActions/AddToFavourites";
 
 const titleFiltering = {
   name: "title",
@@ -20,7 +20,9 @@ const genreFiltering = {
 };
 
 const HomePage = () => {
-  const [movies, setMovies] = useState<MovieDetailsProps[]>([]);
+  // Fetch movies using react-query hook (server-state caching)
+  const { data: movies = [] } = useMoviesQuery();
+
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [titleFiltering, genreFiltering]
   );
@@ -34,18 +36,19 @@ const HomePage = () => {
     setFilterValues(updatedFilterSet);
   };
 
-  useEffect(() => {
-    getMovies().then(movies => {
-      setMovies(movies);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   const displayedMovies = filterFunction(movies);
+
+  // Render AddToFavourites action for each movie
+  const renderActions = (movie: DiscoverMovieOverviewProps) => (
+    <AddToFavourites movieId={movie.id} />
+  );
+
   return (
     <>
       <PageTemplate
         title='Discover Movies'
         movies={displayedMovies}
+        renderActions={renderActions}
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
