@@ -2,16 +2,10 @@ import { useState } from "react";
 import { Container, Grid, Box, Typography, Button, Stack } from "@mui/material";
 import MovieCard from "../components/MovieCard";
 import usePopularMoviesQuery from "../hooks/usePopularMoviesQuery";
-import AddToFavourites from "../components/CardActions/AddToFavourites";
-import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 
 const PopularMoviesPage = () => {
   const [page, setPage] = useState(1);
   const { data: movies = [] } = usePopularMoviesQuery(page);
-
-  const renderActions = (movie: DiscoverMovieOverviewProps) => (
-    <AddToFavourites movieId={movie.id} />
-  );
 
   return (
     <Container sx={{ py: 4 }}>

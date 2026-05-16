@@ -68,7 +68,12 @@ const HomePage = () => {
 
   return (
     <>
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ display: "flex", gap: 2, mb: 3, flexWrap: "wrap", alignItems: "flex-end" }}>
+        <MovieFilterUI
+          onFilterValuesChange={changeFilterValues}
+          titleFilter={filterValues[0].value}
+          genreFilter={filterValues[1].value}
+        />
         <FormControl sx={{ minWidth: 200 }}>
           <InputLabel>Sort By</InputLabel>
           <Select
@@ -87,11 +92,6 @@ const HomePage = () => {
         title='Discover Movies'
         movies={displayedMovies}
         renderActions={renderActions}
-      />
-      <MovieFilterUI
-        onFilterValuesChange={changeFilterValues}
-        titleFilter={filterValues[0].value}
-        genreFilter={filterValues[1].value}
       />
     </>
   );

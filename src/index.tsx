@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Route, Navigate, Routes , Link} from "react-router-dom";
+import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { MoviesProvider } from './contexts/MoviesContext';
 import { ReviewsProvider } from './contexts/ReviewsContext';

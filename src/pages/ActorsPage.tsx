@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Grid, Box, Typography, Button, Stack, TextField, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from "@mui/material";
+import { Container, Grid, Box, Typography, Button, Stack, FormControl, InputLabel, Select, SelectChangeEvent, MenuItem } from "@mui/material";
 import ActorCard from "../components/ActorCard";
 import useActorsQuery from "../hooks/useActorsQuery";
 

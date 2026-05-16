@@ -81,16 +81,22 @@ const ActorDetails: React.FC = () => {
                   <Grid item xs={12} sm={6} md={4} key={movie.id}>
                     <MovieCard
                       movie={{
-                        id: movie.id,
-                        title: movie.title,
-                        poster_path: movie.poster_path,
-                        release_date: movie.release_date,
-                        vote_average: 0,
-                        overview: "",
+                        adult: false,
+                        backdrop_path: undefined,
                         genre_ids: [],
-                        backdrop_path: null,
+                        id: movie.id,
+                        original_language: "",
+                        original_title: movie.title,
+                        overview: "",
+                        popularity: 0,
+                        poster_path: movie.poster_path || undefined,
+                        release_date: movie.release_date,
+                        title: movie.title,
+                        video: false,
+                        vote_average: 0,
+                        vote_count: 0,
                         favourite: false,
-                      }}
+                      } as any}
                     />
                   </Grid>
                 ))}

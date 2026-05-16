@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@mui/material/Link";
-import Chip from "@mui/material/Chip";
+
 import { TVSeriesOverviewProps } from "../types/movieAppTypes";
 
 const imageUrl = "https://image.tmdb.org/t/p/w342";

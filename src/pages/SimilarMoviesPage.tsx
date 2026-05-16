@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Container, Grid, Box, Typography, Button, Stack, CircularProgress } from "@mui/material";
+import { Container, Grid, Typography, CircularProgress } from "@mui/material";
 import MovieCard from "../components/MovieCard";
 import useSimilarMoviesQuery from "../hooks/useSimilarMoviesQuery";
 
