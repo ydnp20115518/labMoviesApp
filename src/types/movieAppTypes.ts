@@ -13,7 +13,7 @@ favourite: boolean;
 // Props interface for components that display a list of movies
 export type BaseMovieListProps  ={
   movies: NonNullable<DiscoverMovieOverviewProps[]>;
-  selectFavourite: (movieId: number) => void;  //add this
+  renderActions?: (movie: DiscoverMovieOverviewProps) => React.ReactNode;
 }
 
 export type MovieDetailsProps = paths["/3/movie/{movie_id}"]["get"]["responses"][200]["content"]["application/json"] & {

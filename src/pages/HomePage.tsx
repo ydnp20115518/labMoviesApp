@@ -21,19 +21,9 @@ const genreFiltering = {
 
 const HomePage = () => {
   const [movies, setMovies] = useState<MovieDetailsProps[]>([]);
-  const favourites = movies.filter(m => m.favourite)
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [titleFiltering, genreFiltering]
   );
-
-  localStorage.setItem('favourites', JSON.stringify(favourites))
-  // New function
-  const addToFavourites = (movieId: number) => {
-    const updatedMovies = movies.map((m: MovieDetailsProps) =>
-      m.id === movieId ? { ...m, favourite: true } : m
-    );
-    setMovies(updatedMovies);
-  };
 
   const changeFilterValues = (type: string, value: string) => {
     const changedFilter = { name: type, value: value };
@@ -56,7 +46,6 @@ const HomePage = () => {
       <PageTemplate
         title='Discover Movies'
         movies={displayedMovies}
-        selectFavourite={addToFavourites}
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}

@@ -137,7 +137,7 @@ TBD
 
 ---
 
-### [ ] 4.0 Refactor MovieCard to Support Configurable Actions
+### [x] 4.0 Refactor MovieCard to Support Configurable Actions
 
 **Goal**: Convert MovieCard to accept a configurable `actions` prop (render-props style) so different pages can render different action buttons without duplicating the component.
 

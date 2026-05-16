@@ -30,14 +30,11 @@ const FavouriteMoviesPage: React.FC= () => {
 
   const displayedMovies = filterFunction(favouriteMovies);
 
-  const toDo = () => true;
-
   return (
     <>
       <PageTemplate
         title="Favourite Movies"
         movies={displayedMovies}
-        selectFavourite={toDo}
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
