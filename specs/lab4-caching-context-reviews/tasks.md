@@ -101,7 +101,7 @@ TBD
 
 ---
 
-### [ ] 3.0 Refactor API Hooks to Use react-query Queries
+### [x] 3.0 Refactor API Hooks to Use react-query Queries
 
 **Goal**: Convert manual `useState` + `useEffect` patterns to react-query useQuery hooks for getMovies, getMovie, and getMovieReviews.
 
