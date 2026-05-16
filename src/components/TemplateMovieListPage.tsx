@@ -9,7 +9,7 @@ const styles = {
   }
 };
 
-const MovieListPageTemplate= ({ movies, title, selectFavourite }: MovieListPageTemplateProps)=> {
+const MovieListPageTemplate= ({ movies, title, renderActions }: MovieListPageTemplateProps)=> {
   return (
     <Grid container sx={styles.root}>
       <Grid item xs={12}>
@@ -17,7 +17,7 @@ const MovieListPageTemplate= ({ movies, title, selectFavourite }: MovieListPageT
       </Grid>
       <Grid item container spacing={5}>
         <MovieList
-          selectFavourite={selectFavourite}
+          renderActions={renderActions}
           movies={movies}
         ></MovieList>
       </Grid>

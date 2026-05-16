@@ -1,19 +1,16 @@
-import { MouseEvent } from "react";
+import { ReactNode } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
 import img from '../images/film-poster-placeholder.png';
 import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
-import { Link } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 
 const styles = {
@@ -26,16 +23,10 @@ const styles = {
 
 interface MovieCardProps {
   movie: DiscoverMovieOverviewProps;
-  selectFavourite: (movieId: number) => void;
+  actions?: ReactNode;
 }
 
-const MovieCard = ({ movie, selectFavourite }: MovieCardProps) => {
-
-  const handleAddToFavourite = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    selectFavourite(movie.id);
-  };
-
+const MovieCard = ({ movie, actions }: MovieCardProps) => {
   return (
     <Card sx={styles.card}>
       <CardHeader
@@ -77,16 +68,11 @@ const MovieCard = ({ movie, selectFavourite }: MovieCardProps) => {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favourites" onClick={handleAddToFavourite}>
-          <FavoriteIcon color="primary" fontSize="large" />
-        </IconButton>
-        <Link to={`/movies/${movie.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
-            More Info ...
-          </Button>
-        </Link>
-      </CardActions>
+      {actions && (
+        <CardActions disableSpacing>
+          {actions}
+        </CardActions>
+      )}
     </Card>
   );
 }

@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Box, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from "@mui/material";
 import PageTemplate from '../components/TemplateMovieListPage';
-import { MovieDetailsProps } from "../types/movieAppTypes";
-import { getMovies } from "../api/tmdb-api";
+import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, {
   titleFilter,
   genreFilter,
 } from "../components/MovieFilterUI";
+import useMoviesQuery from "../hooks/useMoviesQuery";
+import AddToFavourites from "../components/CardActions/AddToFavourites";
 
 const titleFiltering = {
   name: "title",
@@ -19,21 +21,16 @@ const genreFiltering = {
   condition: genreFilter,
 };
 
+type SortOption = "title" | "rating-asc" | "rating-desc" | "popularity";
+
 const HomePage = () => {
-  const [movies, setMovies] = useState<MovieDetailsProps[]>([]);
-  const favourites = movies.filter(m => m.favourite)
+  // Fetch movies using react-query hook (server-state caching)
+  const { data: movies = [] } = useMoviesQuery();
+  const [sortBy, setSortBy] = useState<SortOption>("popularity");
+
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [titleFiltering, genreFiltering]
   );
-
-  localStorage.setItem('favourites', JSON.stringify(favourites))
-  // New function
-  const addToFavourites = (movieId: number) => {
-    const updatedMovies = movies.map((m: MovieDetailsProps) =>
-      m.id === movieId ? { ...m, favourite: true } : m
-    );
-    setMovies(updatedMovies);
-  };
 
   const changeFilterValues = (type: string, value: string) => {
     const changedFilter = { name: type, value: value };
@@ -44,19 +41,52 @@ const HomePage = () => {
     setFilterValues(updatedFilterSet);
   };
 
-  useEffect(() => {
-    getMovies().then(movies => {
-      setMovies(movies);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const displayedMovies = filterFunction(movies);
+  let displayedMovies = filterFunction(movies);
+
+  displayedMovies = [...displayedMovies].sort((a, b) => {
+    switch (sortBy) {
+      case "title":
+        return a.title.localeCompare(b.title);
+      case "rating-asc":
+        return a.vote_average - b.vote_average;
+      case "rating-desc":
+        return b.vote_average - a.vote_average;
+      case "popularity":
+      default:
+        return b.popularity - a.popularity;
+    }
+  });
+
+  const handleSortChange = (event: SelectChangeEvent<SortOption>) => {
+    setSortBy(event.target.value as SortOption);
+  };
+
+  // Render AddToFavourites action for each movie
+  const renderActions = (movie: DiscoverMovieOverviewProps) => (
+    <AddToFavourites movieId={movie.id} />
+  );
+
   return (
     <>
+      <Box sx={{ mb: 2 }}>
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel>Sort By</InputLabel>
+          <Select
+            value={sortBy}
+            onChange={handleSortChange}
+            label="Sort By"
+          >
+            <MenuItem value="popularity">Popularity (High to Low)</MenuItem>
+            <MenuItem value="title">Title (A to Z)</MenuItem>
+            <MenuItem value="rating-desc">Rating (High to Low)</MenuItem>
+            <MenuItem value="rating-asc">Rating (Low to High)</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
       <PageTemplate
         title='Discover Movies'
         movies={displayedMovies}
-        selectFavourite={addToFavourites}
+        renderActions={renderActions}
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
