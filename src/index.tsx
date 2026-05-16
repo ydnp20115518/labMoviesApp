@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import MoviePage from "./pages/MovieDetailsPage";
 import FavouriteMoviesPage from "./pages/FavouriteMoviesPage";
 import MovieReviewPage from "./pages/MovieReviewPage";
+import AddMovieReviewPage from "./pages/AddMovieReviewPage";
 import SiteHeader from './components/SiteHeader'
 
 // Initialize QueryClient with default configuration
@@ -35,6 +36,7 @@ const App = () => {
       </ul>
       <Routes>
         <Route path="/movies/favourites" element={<FavouriteMoviesPage />} />
+        <Route path="/movies/:id/review" element={<AddMovieReviewPage />} />
         <Route path="/movies/:id" element={<MoviePage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="*" element={<Navigate to="/" />} />
