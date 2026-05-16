@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Box, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from "@mui/material";
 import PageTemplate from '../components/TemplateMovieListPage';
 import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import useFiltering from "../hooks/useFiltering";
@@ -19,9 +21,12 @@ const genreFiltering = {
   condition: genreFilter,
 };
 
+type SortOption = "title" | "rating-asc" | "rating-desc" | "popularity";
+
 const HomePage = () => {
   // Fetch movies using react-query hook (server-state caching)
   const { data: movies = [] } = useMoviesQuery();
+  const [sortBy, setSortBy] = useState<SortOption>("popularity");
 
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [titleFiltering, genreFiltering]
@@ -36,7 +41,25 @@ const HomePage = () => {
     setFilterValues(updatedFilterSet);
   };
 
-  const displayedMovies = filterFunction(movies);
+  let displayedMovies = filterFunction(movies);
+
+  displayedMovies = [...displayedMovies].sort((a, b) => {
+    switch (sortBy) {
+      case "title":
+        return a.title.localeCompare(b.title);
+      case "rating-asc":
+        return a.vote_average - b.vote_average;
+      case "rating-desc":
+        return b.vote_average - a.vote_average;
+      case "popularity":
+      default:
+        return b.popularity - a.popularity;
+    }
+  });
+
+  const handleSortChange = (event: SelectChangeEvent<SortOption>) => {
+    setSortBy(event.target.value as SortOption);
+  };
 
   // Render AddToFavourites action for each movie
   const renderActions = (movie: DiscoverMovieOverviewProps) => (
@@ -45,6 +68,21 @@ const HomePage = () => {
 
   return (
     <>
+      <Box sx={{ mb: 2 }}>
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel>Sort By</InputLabel>
+          <Select
+            value={sortBy}
+            onChange={handleSortChange}
+            label="Sort By"
+          >
+            <MenuItem value="popularity">Popularity (High to Low)</MenuItem>
+            <MenuItem value="title">Title (A to Z)</MenuItem>
+            <MenuItem value="rating-desc">Rating (High to Low)</MenuItem>
+            <MenuItem value="rating-asc">Rating (Low to High)</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
       <PageTemplate
         title='Discover Movies'
         movies={displayedMovies}

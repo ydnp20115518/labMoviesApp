@@ -40,3 +40,65 @@ export const getMovies = () => {
         return json.results;
       });
   };
+
+  export const getPopularMovies = (page: number = 1) => {
+    return fetch(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${page}&include_adult=false`
+    )
+      .then(res => res.json())
+      .then(json => json.results);
+  };
+
+  export const getTopRatedMovies = (page: number = 1) => {
+    return fetch(
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${page}&include_adult=false`
+    )
+      .then(res => res.json())
+      .then(json => json.results);
+  };
+
+  export const getSimilarMovies = (movieId: string | number, page: number = 1) => {
+    return fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${page}`
+    )
+      .then(res => res.json())
+      .then(json => json.results);
+  };
+
+  export const getTVSeries = (page: number = 1) => {
+    return fetch(
+      `https://api.themoviedb.org/3/tv/popular?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${page}`
+    )
+      .then(res => res.json())
+      .then(json => json.results);
+  };
+
+  export const getTVSeriesDetails = (id: string | number) => {
+    return fetch(
+      `https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
+    )
+      .then(res => res.json());
+  };
+
+  export const getActors = (page: number = 1) => {
+    return fetch(
+      `https://api.themoviedb.org/3/person/popular?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${page}`
+    )
+      .then(res => res.json())
+      .then(json => json.results);
+  };
+
+  export const getActorDetails = (actorId: string | number) => {
+    return fetch(
+      `https://api.themoviedb.org/3/person/${actorId}?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
+    )
+      .then(res => res.json());
+  };
+
+  export const getActorMovies = (actorId: string | number) => {
+    return fetch(
+      `https://api.themoviedb.org/3/person/${actorId}/movie_credits?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
+    )
+      .then(res => res.json())
+      .then(json => json.cast);
+  };

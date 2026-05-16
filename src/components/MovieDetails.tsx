@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -9,6 +10,8 @@ import { MovieDetailsProps } from "../types/movieAppTypes";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import MovieReviews from './MovieReviews'
 
 const styles = {
@@ -79,6 +82,16 @@ const MovieDetails = (movie: MovieDetailsProps) => {
             <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
                 <MovieReviews {...movie} />
             </Drawer>
+            
+            <Box sx={{ mt: 3, display: "flex", gap: 2 }}>
+                <Button 
+                  variant="outlined" 
+                  component={RouterLink} 
+                  to={`/movies/${movie.id}/similar`}
+                >
+                  View Similar Movies
+                </Button>
+            </Box>
         </>
     );
 };
