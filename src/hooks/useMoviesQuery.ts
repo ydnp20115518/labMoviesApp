@@ -4,14 +4,15 @@ import { DiscoverMovieOverviewProps } from '../types/movieAppTypes';
 
 /**
  * Custom hook to fetch and cache a list of discovered movies using react-query
- * Query key: ['movies']
+ * Query key: ['movies', page]
  * 
+ * @param page - Page number for pagination
  * @returns {UseQueryResult} Object with data, isLoading, isError, error
  */
-export const useMoviesQuery = (): UseQueryResult<DiscoverMovieOverviewProps[], Error> => {
+export const useMoviesQuery = (page: number = 1): UseQueryResult<DiscoverMovieOverviewProps[], Error> => {
   return useQuery<DiscoverMovieOverviewProps[], Error>(
-    ['movies'],
-    () => getMovies(),
+    ['movies', page],
+    () => getMovies(page),
     {
       // Use defaults from QueryClient (5min staleTime, 10min cacheTime)
       // Can override here if needed per specific query

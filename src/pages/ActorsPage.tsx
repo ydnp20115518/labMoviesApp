@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Container, Grid, Box, Typography, Button, Stack, FormControl, InputLabel, Select, SelectChangeEvent, MenuItem } from "@mui/material";
+import { Container, Grid, Box, Typography, FormControl, InputLabel, Select, SelectChangeEvent, MenuItem } from "@mui/material";
 import ActorCard from "../components/ActorCard";
 import useActorsQuery from "../hooks/useActorsQuery";
+import PaginationControls from "../components/PaginationControls";
 
 const ActorsPage = () => {
   const [page, setPage] = useState(1);
@@ -54,24 +55,7 @@ const ActorsPage = () => {
         ))}
       </Grid>
 
-      <Stack direction="row" spacing={2} justifyContent="center">
-        <Button
-          variant="contained"
-          onClick={() => setPage(Math.max(1, page - 1))}
-          disabled={page === 1}
-        >
-          Previous
-        </Button>
-        <Box sx={{ display: "flex", alignItems: "center", px: 2 }}>
-          <Typography>Page {page}</Typography>
-        </Box>
-        <Button
-          variant="contained"
-          onClick={() => setPage(page + 1)}
-        >
-          Next
-        </Button>
-      </Stack>
+      <PaginationControls page={page} onPageChange={setPage} />
     </Container>
   );
 };

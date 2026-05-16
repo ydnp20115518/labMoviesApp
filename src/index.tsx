@@ -1,6 +1,8 @@
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
+import { CssBaseline } from '@mui/material';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { Box } from '@mui/material';
 import { MoviesProvider } from './contexts/MoviesContext';
 import { ReviewsProvider } from './contexts/ReviewsContext';
 import HomePage from "./pages/HomePage";
@@ -31,38 +33,45 @@ const queryClient = new QueryClient({
 
 const App = () => {
   return (
-     <BrowserRouter>
-     <SiteHeader />      {/* New Header  */}
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/movies/popular" element={<PopularMoviesPage />} />
-        <Route path="/movies/top-rated" element={<TopRatedMoviesPage />} />
-        <Route path="/movies/:id/similar" element={<SimilarMoviesPage />} />
-        <Route path="/movies/:id/review" element={<AddMovieReviewPage />} />
-        <Route path="/movies/:id" element={<MoviePage />} />
-        <Route path="/movies/favourites" element={<FavouriteMoviesPage />} />
-        
-        <Route path="/tv-series" element={<TVSeriesPage />} />
-        <Route path="/tv-series/:id" element={<TVSeriesDetailsPage />} />
-        
-        <Route path="/actors" element={<ActorsPage />} />
-        <Route path="/actors/:id" element={<ActorDetailsPage />} />
-        
-        <Route path="/reviews/:id" element={<MovieReviewPage/>} />
-        
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+    <BrowserRouter>
+      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+        <SiteHeader />
+        <Box sx={{ flex: 1 }}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/movies/popular" element={<PopularMoviesPage />} />
+            <Route path="/movies/top-rated" element={<TopRatedMoviesPage />} />
+            <Route path="/movies/:id/similar" element={<SimilarMoviesPage />} />
+            <Route path="/movies/:id/review" element={<AddMovieReviewPage />} />
+            <Route path="/movies/:id" element={<MoviePage />} />
+            <Route path="/movies/favourites" element={<FavouriteMoviesPage />} />
+            
+            <Route path="/tv-series" element={<TVSeriesPage />} />
+            <Route path="/tv-series/:id" element={<TVSeriesDetailsPage />} />
+            
+            <Route path="/actors" element={<ActorsPage />} />
+            <Route path="/actors/:id" element={<ActorDetailsPage />} />
+            
+            <Route path="/reviews/:id" element={<MovieReviewPage/>} />
+            
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Box>
+      </Box>
     </BrowserRouter>
   );
 };
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <QueryClientProvider client={queryClient}>
-      <MoviesProvider>
-        <ReviewsProvider>
-          <App />
-        </ReviewsProvider>
-      </MoviesProvider>
-    </QueryClientProvider>
+    <>
+      <CssBaseline />
+      <QueryClientProvider client={queryClient}>
+        <MoviesProvider>
+          <ReviewsProvider>
+            <App />
+          </ReviewsProvider>
+        </MoviesProvider>
+      </QueryClientProvider>
+    </>
   )
 

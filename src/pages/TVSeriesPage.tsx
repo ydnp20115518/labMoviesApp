@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Container, Grid, Box, Typography, Button, Stack } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import TVSeriesCard from "../components/TVSeriesCard";
 import useTVSeriesQuery from "../hooks/useTVSeriesQuery";
+import PaginationControls from "../components/PaginationControls";
 
 const TVSeriesPage = () => {
   const [page, setPage] = useState(1);
@@ -24,24 +25,7 @@ const TVSeriesPage = () => {
         ))}
       </Grid>
 
-      <Stack direction="row" spacing={2} justifyContent="center">
-        <Button
-          variant="contained"
-          onClick={() => setPage(Math.max(1, page - 1))}
-          disabled={page === 1}
-        >
-          Previous
-        </Button>
-        <Box sx={{ display: "flex", alignItems: "center", px: 2 }}>
-          <Typography>Page {page}</Typography>
-        </Box>
-        <Button
-          variant="contained"
-          onClick={() => setPage(page + 1)}
-        >
-          Next
-        </Button>
-      </Stack>
+      <PaginationControls page={page} onPageChange={setPage} />
     </Container>
   );
 };

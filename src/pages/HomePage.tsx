@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent } from "@mui/material";
+import { Box, MenuItem, FormControl, InputLabel, Select, SelectChangeEvent, Container } from "@mui/material";
 import PageTemplate from '../components/TemplateMovieListPage';
 import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import useFiltering from "../hooks/useFiltering";
@@ -9,6 +9,7 @@ import MovieFilterUI, {
 } from "../components/MovieFilterUI";
 import useMoviesQuery from "../hooks/useMoviesQuery";
 import AddToFavourites from "../components/CardActions/AddToFavourites";
+import PaginationControls from "../components/PaginationControls";
 
 const titleFiltering = {
   name: "title",
@@ -24,8 +25,9 @@ const genreFiltering = {
 type SortOption = "title" | "rating-asc" | "rating-desc" | "popularity";
 
 const HomePage = () => {
+  const [page, setPage] = useState(1);
   // Fetch movies using react-query hook (server-state caching)
-  const { data: movies = [] } = useMoviesQuery();
+  const { data: movies = [] } = useMoviesQuery(page);
   const [sortBy, setSortBy] = useState<SortOption>("popularity");
 
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
@@ -67,7 +69,7 @@ const HomePage = () => {
   );
 
   return (
-    <>
+    <Container sx={{ py: 4 }}>
       <Box sx={{ display: "flex", gap: 2, mb: 3, flexWrap: "wrap", alignItems: "flex-end" }}>
         <MovieFilterUI
           onFilterValuesChange={changeFilterValues}
@@ -93,7 +95,8 @@ const HomePage = () => {
         movies={displayedMovies}
         renderActions={renderActions}
       />
-    </>
+      <PaginationControls page={page} onPageChange={setPage} />
+    </Container>
   );
 };
 export default HomePage;
