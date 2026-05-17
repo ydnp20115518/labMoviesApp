@@ -15,7 +15,7 @@ interface ActorCardProps {
 
 const ActorCard = ({ actor }: ActorCardProps) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, height: "100%", display: "flex", flexDirection: "column" }}>
       <CardMedia
         component="img"
         height="400"
@@ -26,7 +26,7 @@ const ActorCard = ({ actor }: ActorCardProps) => {
         }
         alt={actor.name}
       />
-      <CardContent>
+      <CardContent sx={{ flex: 1 }}>
         <Typography gutterBottom variant="h5" component="div">
           {actor.name}
         </Typography>

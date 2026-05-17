@@ -14,8 +14,8 @@ import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import Avatar from "@mui/material/Avatar";
 
 const styles = {
-  card: { maxWidth: 345 },
-  media: { height: 500 },
+  card: { maxWidth: 345, height: "100%", display: "flex", flexDirection: "column" },
+  media: { height: 500, objectFit: "cover" },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",
   },
@@ -38,7 +38,18 @@ const MovieCard = ({ movie, actions }: MovieCardProps) => {
           ) : null
         }
         title={
-          <Typography variant="h5" component="p">
+          <Typography 
+            variant="h5" 
+            component="p"
+            sx={{
+              minHeight: "2.8em",
+              maxHeight: "2.8em",
+              overflow: "hidden",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical"
+            }}
+          >
             {movie.title}{" "}
           </Typography>
         }
@@ -52,7 +63,7 @@ const MovieCard = ({ movie, actions }: MovieCardProps) => {
             : img
         }
       />
-      <CardContent>
+      <CardContent sx={{ flex: 1 }}>
         <Grid container>
           <Grid item xs={6}>
             <Typography variant="h6" component="p">

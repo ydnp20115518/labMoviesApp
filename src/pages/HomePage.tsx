@@ -70,7 +70,21 @@ const HomePage = () => {
 
   return (
     <Container sx={{ py: 4 }}>
-      <Box sx={{ display: "flex", gap: 2, mb: 3, flexWrap: "wrap", alignItems: "flex-end" }}>
+      <Box 
+        sx={{ 
+          display: "flex", 
+          gap: 2, 
+          mb: 3, 
+          flexWrap: "wrap", 
+          alignItems: "flex-end",
+          position: "sticky",
+          top: 64,
+          backgroundColor: "#fff",
+          zIndex: 100,
+          padding: "16px 0",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"
+        }}
+      >
         <MovieFilterUI
           onFilterValuesChange={changeFilterValues}
           titleFilter={filterValues[0].value}
