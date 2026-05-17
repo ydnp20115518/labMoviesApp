@@ -55,7 +55,9 @@ const ActorsPage = () => {
         ))}
       </Grid>
 
-      <PaginationControls page={page} onPageChange={setPage} />
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+        <PaginationControls page={page} onPageChange={setPage} />
+      </Box>
     </Container>
   );
 };

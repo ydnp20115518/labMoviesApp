@@ -29,7 +29,7 @@ const styles = {
     },
     fab: {
         position: "fixed",
-        top: 50,
+        top: 80,
         right: 2,
     },
 };
@@ -80,7 +80,7 @@ const MovieDetails = (movie: MovieDetailsProps) => {
                 Reviews
             </Fab>
             <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                <MovieReviews {...movie} />
+                <MovieReviews {...movie} onClose={() => setDrawerOpen(false)} />
             </Drawer>
             
             <Box sx={{ mt: 3, display: "flex", gap: 2 }}>

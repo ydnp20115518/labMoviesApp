@@ -6,7 +6,7 @@ import useFavouriteMovies from "../hooks/useFavouriteMovies";
 import RemoveFromFavourites from "../components/CardActions/RemoveFromFavourites";
 import WriteReview from "../components/CardActions/WriteReview";
 import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
-import Box from "@mui/material/Box";
+import { Box, Container } from "@mui/material";
 
 const titleFiltering = {
   name: "title",
@@ -48,18 +48,34 @@ const FavouriteMoviesPage = () => {
   );
 
   return (
-    <>
+    <Container sx={{ py: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          mb: 3,
+          flexWrap: "wrap",
+          alignItems: "flex-end",
+          position: "sticky",
+          top: 64,
+          backgroundColor: "#fff",
+          zIndex: 100,
+          padding: "16px 0",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <MovieFilterUI
+          onFilterValuesChange={changeFilterValues}
+          titleFilter={filterValues[0].value}
+          genreFilter={filterValues[1].value}
+        />
+      </Box>
       <PageTemplate
         title="Favourite Movies"
         movies={displayedMovies}
         renderActions={renderActions}
       />
-      <MovieFilterUI
-        onFilterValuesChange={changeFilterValues}
-        titleFilter={filterValues[0].value}
-        genreFilter={filterValues[1].value}
-      />
-    </>
+    </Container>
   );
 };
 

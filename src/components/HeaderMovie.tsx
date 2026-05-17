@@ -1,8 +1,5 @@
 
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import HomeIcon from "@mui/icons-material/Home";
 import { MovieDetailsProps } from "../types/movieAppTypes";
@@ -12,7 +9,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 const styles = {
   root: {
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "center",
     alignItems: "center",
     flexWrap: "wrap",
     padding: 1.5,
@@ -28,9 +25,6 @@ const MovieHeader = (movie: MovieDetailsProps) => {
 
   return (
     <Paper component="div" sx={styles.root}>
-      <IconButton aria-label="go back">
-        <ArrowBackIcon color="primary" fontSize="large" />
-      </IconButton>
       <CardHeader
         avatar={
           isFavourite ? (
@@ -48,9 +42,6 @@ const MovieHeader = (movie: MovieDetailsProps) => {
         <br />
         <span>{`${movie.tagline}`} </span>
       </Typography>
-      <IconButton aria-label="go forward">
-        <ArrowForwardIcon color="primary" fontSize="large" />
-      </IconButton>
     </Paper>
   );
 };

@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -12,6 +13,7 @@ import Grid from "@mui/material/Grid";
 import img from '../images/film-poster-placeholder.png';
 import { DiscoverMovieOverviewProps } from "../types/movieAppTypes";
 import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
 
 const styles = {
   card: { maxWidth: 345, height: "100%", display: "flex", flexDirection: "column" },
@@ -28,7 +30,13 @@ interface MovieCardProps {
 
 const MovieCard = ({ movie, actions }: MovieCardProps) => {
   return (
-    <Card sx={styles.card}>
+    <Box
+      sx={{
+        display: "block",
+        height: "100%",
+      }}
+    >
+      <Card sx={styles.card}>
       <CardHeader
         avatar={
           movie.favourite ? (
@@ -55,14 +63,30 @@ const MovieCard = ({ movie, actions }: MovieCardProps) => {
         }
       />
 
-      <CardMedia
-        sx={styles.media}
-        image={
-          movie.poster_path
-            ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-            : img
-        }
-      />
+      <Box
+        component={RouterLink}
+        to={`/movies/${movie.id}`}
+        sx={{
+          textDecoration: "none",
+          color: "inherit",
+          display: "block",
+          "&:hover": {
+            transform: "translateY(-4px)",
+            boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
+            transition: "all 0.3s ease",
+          },
+          transition: "all 0.3s ease",
+        }}
+      >
+        <CardMedia
+          sx={styles.media}
+          image={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+              : img
+          }
+        />
+      </Box>
       <CardContent sx={{ flex: 1 }}>
         <Grid container>
           <Grid item xs={6}>
@@ -85,6 +109,7 @@ const MovieCard = ({ movie, actions }: MovieCardProps) => {
         </CardActions>
       )}
     </Card>
+    </Box>
   );
 }
 

@@ -11,6 +11,9 @@ import { Link } from "react-router-dom";
 import { MovieDetailsProps } from "../types/movieAppTypes";
 import { excerpt } from "../util";
 import useReviewsByMovieId from "../hooks/useReviewsByMovieId";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const styles = {
     table: {
@@ -18,11 +21,23 @@ const styles = {
     },
 };
 
-const MovieReviews: React.FC<MovieDetailsProps> = (movie) => { 
+interface MovieReviewsProps extends MovieDetailsProps {
+    onClose?: () => void;
+}
+
+const MovieReviews: React.FC<MovieReviewsProps> = (movie) => { 
     const reviews = useReviewsByMovieId(movie.id);
 
     return (
-        <TableContainer component={Paper}>
+        <Box sx={{ padding: 2 }}>
+            <Button
+                startIcon={<ArrowBackIcon />}
+                onClick={movie.onClose}
+                sx={{ mb: 2 }}
+            >
+                Back to Movie
+            </Button>
+            <TableContainer component={Paper}>
             <Table sx={styles.table} aria-label="reviews table">
                 <TableHead>
                     <TableRow>
@@ -62,7 +77,8 @@ const MovieReviews: React.FC<MovieDetailsProps> = (movie) => {
                     ))}
                 </TableBody>
             </Table>
-        </TableContainer>
+            </TableContainer>
+        </Box>
     );
 }
 
