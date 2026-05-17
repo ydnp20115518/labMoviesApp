@@ -23,10 +23,12 @@ import SiteHeader from './components/SiteHeader'
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      cacheTime: 10 * 60 * 1000, // 10 minutes
+      staleTime: 30 * 60 * 1000, // 30 minutes - data considered fresh
+      cacheTime: 60 * 60 * 1000, // 60 minutes - cache kept in memory
       retry: 1,
       refetchOnWindowFocus: false,
+      refetchOnMount: false, // Don't refetch when component mounts if data is cached
+      refetchOnReconnect: false, // Don't refetch when reconnecting
     },
   },
 });

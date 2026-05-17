@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, FormControl, InputLabel, Select, SelectChangeEvent, TextField, MenuItem } from "@mui/material";
-import { getGenres } from "../api/tmdb-api";
-import { useEffect } from "react";
+import useGenresQuery from "../hooks/useGenresQuery";
 
 export const titleFilter = (movie: any, value: string): boolean => {
     return movie.title?.toLowerCase().search(value.toLowerCase()) !== -1;
@@ -24,13 +23,14 @@ type MovieFilterUIProps = {
 }
 
 const MovieFilterUI = ({ onFilterValuesChange, titleFilter: titleFilterValue, genreFilter: genreFilterValue }: MovieFilterUIProps) => {
+    const { data: allGenres = [] } = useGenresQuery();
     const [genres, setGenres] = useState([{ id: 0, name: "All" }]);
 
     useEffect(() => {
-        getGenres().then((allGenres) => {
-            setGenres([genres[0], ...allGenres]);
-        });
-    }, []);
+        if (allGenres && allGenres.length > 0) {
+            setGenres([{ id: 0, name: "All" }, ...allGenres]);
+        }
+    }, [allGenres]);
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onFilterValuesChange("title", event.target.value);
